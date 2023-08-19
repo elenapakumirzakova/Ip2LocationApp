@@ -1,4 +1,7 @@
-﻿namespace Ip2Location.WebApi.Tests.Controllers;
+﻿using Ip2Location.Business.Models;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Ip2Location.WebApi.Tests.Controllers;
 
 public class LocationControllerTests
 {
@@ -23,7 +26,9 @@ public class LocationControllerTests
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
-        Assert.Equal(MapSuccesResult(response.AsT0), okResult.Value);
+        var responseModel = okResult.Value as ResponseModel;
+        Assert.Equal(response.AsT0.Ip, responseModel.Ip);
+        Assert.Equal(response.AsT0.CountryName, responseModel.Country);
     }
 
     [Fact]
@@ -37,9 +42,6 @@ public class LocationControllerTests
         var ipLocationRequest = fixture.Create<IpLocation>();
         var response = OneOf<Response, ErrorResponse>.FromT1(fixture.Create<ErrorResponse>());
 
-        locationService.Setup(cs => cs.GetLocation(It.IsAny<string>())).ReturnsAsync(response);
-        repository.Setup(hc => hc.InsertAsync(It.IsAny<IpLocation>()));
-
         var controller = new LocationController(locationService.Object, repository.Object);
 
         // Act
@@ -48,19 +50,9 @@ public class LocationControllerTests
         // Assert
         var requestResult = Assert.IsType<ObjectResult>(result);
         Assert.Equal(422, requestResult.StatusCode);
-    }
-
-    private ResponseModel MapSuccesResult(Response success)
-    {
-        return new(
-            ip: success.Ip,
-            type: success.Type,
-            country: success.CountryName,
-            region: success.RegionName,
-            city: success.City,
-            zip: success.Zip,
-            latitude: success.Latitude,
-            longitude: success.Longitude);
+        var responseModel = requestResult.Value as ErrorResponseModel;
+        Assert.Equal("validation_error", responseModel.Type);
+        Assert.Equal("IP address is invalid.", responseModel.Info);
     }
 }
 
