@@ -2,10 +2,12 @@
 public class CacheService : ICacheService
 {
     private readonly IMemoryCache _cache;
+    private readonly CacheOptions _options;
 
-    public CacheService(IMemoryCache cache)
+    public CacheService(IMemoryCache cache, IOptions<CacheOptions> options)
     {
         _cache = cache;
+        _options = options.Value;
     }
 
     public T? GetFromCache<T>(string key) where T : class
@@ -18,9 +20,8 @@ public class CacheService : ICacheService
     {
         var options = new MemoryCacheEntryOptions
         {
-            // Cache for 1 hour
-            AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1),
-            SlidingExpiration = TimeSpan.FromHours(1),
+            AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(_options.ExpirationTime),
+            SlidingExpiration = TimeSpan.FromHours(_options.SlidingExpiration),
         };
 
         return _cache.Set(key, value, options);

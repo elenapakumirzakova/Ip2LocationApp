@@ -2,7 +2,7 @@
 
 ## What is Ip2Location?
 
-The IP-to-Location service is a simple RESTful API that provides geographical location information for a given IP address.
+The Ip2Location service is a simple RESTful API that provides geographical location information for a given IP address.
 
 The app is using an in-memory database and in-memory cache for a Minimum Viable Product (MVP). 
 In order to have a quick and efficient way to prototype and test the functionality of an application without the overhead of setting up and managing a persistent database. 
@@ -34,7 +34,7 @@ git clone https://github.com/yourusername/ip-to-location.git
 
 Navigate to the project directory:
 ```
-cd ip-to-location
+cd ip2locationapp
 ```
 
 Restore packages and build the project:
@@ -53,8 +53,8 @@ From the project directory, run:
 
 ```
 dotnet run
-The service will start, and you can access it at http://localhost:5000.
 ```
+The service will start, and you can access it at http://localhost:5000.
 
 ### Usage
 ##### Get Location for an IP

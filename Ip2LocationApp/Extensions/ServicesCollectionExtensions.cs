@@ -8,6 +8,10 @@ public static class ServicesCollectionExtensions
             .AddOptions<IpStackOptions>()
             .Bind(config.GetSection(IpStackOptions.Key));
 
+        services
+            .AddOptions<CacheOptions>()
+            .Bind(config.GetSection(CacheOptions.Key));
+
         return services;
     }
 

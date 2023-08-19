@@ -2,7 +2,7 @@
 public class IpLocation
 {
     public int Id { get; set; }
-    public Guid RequestId { get; set; } = new Guid();
+    public Guid RequestId { get; set; } = Guid.NewGuid();
     public DateTime CreateTime { get; set; }
     public string? Ip { get; set; }
 

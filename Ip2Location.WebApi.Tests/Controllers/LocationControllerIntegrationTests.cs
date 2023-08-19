@@ -3,6 +3,8 @@
 namespace Ip2Location.WebApi.Tests.Controllers;
 public class LocationControllerIntegrationTests : IClassFixture<WebApplicationFactory<Program>>
 {
+    private const string path = "location?ip={0}";
+
     private readonly WebApplicationFactory<Program> _factory;
 
     public LocationControllerIntegrationTests(WebApplicationFactory<Program> factory)
@@ -19,7 +21,7 @@ public class LocationControllerIntegrationTests : IClassFixture<WebApplicationFa
         var client = _factory.CreateClient();
 
         // Act
-        var response = await client.GetAsync(string.Format("api/location?ip={0}", ip));
+        var response = await client.GetAsync(string.Format(path, ip));
 
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -35,7 +37,7 @@ public class LocationControllerIntegrationTests : IClassFixture<WebApplicationFa
         var client = _factory.CreateClient();
 
         // Act
-        var response = await client.GetAsync(string.Format("api/location?ip={0}", "abc"));
+        var response = await client.GetAsync(string.Format(path, "abc"));
 
         // Assert
         Assert.Equal(HttpStatusCode.UnprocessableEntity, response.StatusCode);

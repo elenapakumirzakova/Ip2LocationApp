@@ -27,7 +27,7 @@ public class LocationService : ILocationService
         SetCache(ip, response);
 
         return response;
-    }
+    }   
 
     private async Task<OneOf<Response, ErrorResponse>> SendPartnerRequest(string ip)
     {
