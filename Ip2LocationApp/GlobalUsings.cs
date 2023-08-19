@@ -1,0 +1,12 @@
+global using Ip2Location.Business.Models;
+global using Ip2Location.Business.Services;
+global using Ip2Location.Business.Services.Interfaces;
+global using Ip2Location.Domain.Models;
+global using Ip2LocationApp.DataAccess;
+global using Ip2LocationApp.DataAccess.Repositories;
+global using Ip2LocationApp.DataAccess.Repositories.Interfaces;
+global using Ip2LocationApp.Extensions;
+global using Microsoft.AspNetCore.Mvc;
+global using Swashbuckle.AspNetCore.Annotations;
+global using System.Net;
+global using Ip2LocationApp.WebApi.Models;

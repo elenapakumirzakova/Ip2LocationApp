@@ -1,0 +1,14 @@
+global using AutoFixture;
+global using Ip2Location.Business.Models;
+global using Ip2Location.Business.Services.Interfaces;
+global using Ip2Location.Domain.Models;
+global using Ip2LocationApp.Controllers;
+global using Ip2LocationApp.DataAccess.Repositories.Interfaces;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.AspNetCore.Mvc.Testing;
+global using Moq;
+global using OneOf;
+global using System.Net;
+global using Xunit;
+global using Ip2LocationApp.WebApi.Models;
+global using OneOf.Types;
