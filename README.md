@@ -29,7 +29,7 @@ Built-in caching for faster responses.
 #### Installation
 Clone the repository:
 ```
-git clone https://github.com/yourusername/ip-to-location.git
+git clone https://github.com/elenapakumirzakova/Ip2LocationApp.git
 ```
 
 Navigate to the project directory:
