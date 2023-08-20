@@ -46,7 +46,7 @@ dotnet build
 #### Configuration
 Update the appsettings.json with the required configurations:
 
-  - ApiKey: API key for the third-party geolocation service (update if required).
+  - accessKey: API key for the third-party geolocation service (update if required).
 
 #### Running the Service
 From the project directory, run:
@@ -95,7 +95,7 @@ What supposed to be done next:
   - CI Deploy (Cloud preffered)
   - Replace In-Memory DB with persistent DB
   - Replace In-Memory Cache with Redis or any similar
-  - Implement Logging with Serilog or any Similar
+  - Implement Logging with Serilog or any similar
 
 ## Contributing
 If you'd like to contribute, please fork the repository and use a feature branch.
