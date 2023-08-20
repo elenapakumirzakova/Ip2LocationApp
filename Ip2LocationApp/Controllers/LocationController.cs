@@ -28,41 +28,63 @@ public class LocationController : ControllerBase
             return StatusCode(422, new ErrorResponseModel(Type, Error));
         }
 
-        await SaveRequest(ip);
-        var result = await _locationService.GetLocation(ip);
+        var ipLocation = CreateIpLocation(ip);
+        await SaveIpLocation(ipLocation);
+
+        var result = await _locationService.GetLocation(ipLocation);
+        if (result.IsT0) 
+            await UpdateIpLocation(result.AsT0);
 
         return result.Match<IActionResult>(
             success => Ok(MapSuccesResult(success)),
             error => StatusCode(500, MapError(error)));
     }
 
-    private async Task SaveRequest(string ip)
+    private IpLocation CreateIpLocation(string ip)
+    {
+         return new IpLocation() { Ip = ip, CreateTime = DateTime.Now };
+    }
+
+    private async Task SaveIpLocation(IpLocation ipLocation)
     {
         try
         {
-            var entity = new IpLocation() { Ip = ip, CreateTime = DateTime.Now };
-            await _repository.InsertAsync(entity);
+            await _repository.InsertAsync(ipLocation);
             await _repository.SaveAsync();
-            Console.WriteLine("Successfully to saved request to DB: {0}", entity.RequestId);
+            Console.WriteLine("Successfully saved looked-up value in DB with ip: {0}, requestId: {1},", ipLocation.Ip, ipLocation.RequestId);
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Failed to save request to DB: {0}", ex.Message);
+            Console.WriteLine("Failed to save looked-up value in DB with ip: {0}, requestId: {1},", ipLocation.Ip, ipLocation.RequestId);
         }
     }
 
-    private ResponseModel MapSuccesResult(Response success)
+    private async Task UpdateIpLocation(IpLocation ipLocation)
     {
-        Console.WriteLine("Map successful result ip: {0}", success.Ip);
+        try
+        {
+            _repository.Update(ipLocation);
+            await _repository.SaveAsync();
+            Console.WriteLine("Successfully updated looked-up value in DB with ip: {0}, requestId: {1},", ipLocation.Ip, ipLocation.RequestId);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Failed to update looked-up value in DB with ip: {0}, requestId: {1},", ipLocation.Ip, ipLocation.RequestId);
+        }
+    }
+
+    private ResponseModel MapSuccesResult(IpLocation ipLocation)
+    {
+        Console.WriteLine("Map successful result ip: {0}", ipLocation.Ip);
         return new(
-            ip: success.Ip,
-            type: success.Type,
-            country: success.CountryName,
-            region: success.RegionName,
-            city: success.City,
-            zip: success.Zip,
-            latitude: success.Latitude,
-            longitude: success.Longitude);
+            ip: ipLocation.Ip,
+            type: ipLocation.Type,
+            country: ipLocation.Country,
+            region: ipLocation.Region,
+            city: ipLocation.City,
+            zip: ipLocation.Zip,
+            latitude: ipLocation.Latitude,
+            longitude: ipLocation.Longitude);
     }
 
     private ErrorResponseModel MapError(ErrorResponse error)

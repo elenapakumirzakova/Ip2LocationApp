@@ -4,7 +4,7 @@
 
 The Ip2Location service is a simple RESTful API that provides geographical location information for a given IP address.
 
-The app is using an in-memory database and in-memory cache for a Minimum Viable Product (MVP). 
+The app is using an **in-memory database**, **in-memory cache**, **console as logging** for a Minimum Viable Product (MVP). 
 In order to have a quick and efficient way to prototype and test the functionality of an application without the overhead of setting up and managing a persistent database. 
 
   - [Features](#Features)
@@ -94,6 +94,7 @@ What supposed to be done next:
   - CI Deploy (Cloud preffered)
   - Replace In-Memory DB with persistent DB
   - Replace In-Memory Cache with Redis or any similar
+  - Implement Logging with Serilog or any Similar
 
 ## Contributing
 If you'd like to contribute, please fork the repository and use a feature branch.

@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Ip2Location.Domain\Ip2Location.Domain.csproj" />
+    <ProjectReference Include="..\Ip2LocationApp.DataAccess\Ip2LocationApp.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

@@ -8,17 +8,17 @@ public class LocationServiceTests
         var fixture = new Fixture();
         var cacheService = new Mock<ICacheService>();
         var ipStackHttpClient = new Mock<IIpStackHttpClient>();
-        var ip = fixture.Create<string>();
+        var ipLocation = fixture.Create<IpLocation>();
         var response = OneOf<Response, ErrorResponse>.FromT0(fixture.Create<Response>());
         var options = Options.Create(fixture.Create<IpStackOptions>());
 
         cacheService.Setup(cs => cs.GetFromCache<Response>(It.IsAny<string>())).Returns((Response)null);
-        ipStackHttpClient.Setup(hc => hc.SendAsync<Response, ErrorResponse>(It.IsAny<HttpRequestMessage>())).ReturnsAsync(response);
+        ipStackHttpClient.Setup(hc => hc.SendAsync<Response, ErrorResponse>(It.IsAny<HttpRequestMessage>(), It.IsAny<string>())).ReturnsAsync(response);
 
         var service = new LocationService(ipStackHttpClient.Object, options, cacheService.Object);
 
         // Act
-        var result = service.GetLocation(ip);
+        var result = service.GetLocation(ipLocation);
 
         // Assert
         Assert.NotNull(result);
@@ -29,19 +29,19 @@ public class LocationServiceTests
     {
         // Arrange
         var fixture = new Fixture();
-        var ip = fixture.Create<string>();
+        var ipLocation = fixture.Create<IpLocation>();
         var errorResponse = OneOf<Response, ErrorResponse>.FromT1(fixture.Create<ErrorResponse>());
         var options = Options.Create(fixture.Create<IpStackOptions>());
         var cacheService = new Mock<ICacheService>();
         var ipStackHttpClient = new Mock<IIpStackHttpClient>();
 
         cacheService.Setup(cs => cs.GetFromCache<Response>(It.IsAny<string>())).Returns((Response)null);
-        ipStackHttpClient.Setup(hc => hc.SendAsync<Response, ErrorResponse>(It.IsAny<HttpRequestMessage>())).ReturnsAsync(errorResponse);
+        ipStackHttpClient.Setup(hc => hc.SendAsync<Response, ErrorResponse>(It.IsAny<HttpRequestMessage>(), It.IsAny<string>())).ReturnsAsync(errorResponse);
 
         var service = new LocationService(ipStackHttpClient.Object, options, cacheService.Object);
 
         // Act
-        var result = service.GetLocation(ip);
+        var result = service.GetLocation(ipLocation);
 
         // Assert
         Assert.NotNull(result);
@@ -52,7 +52,7 @@ public class LocationServiceTests
     {
         // Arrange
         var fixture = new Fixture();
-        var ip = fixture.Create<string>();
+        var ipLocation = fixture.Create<IpLocation>();
         var cachedResponse = fixture.Create<Response>();
         var cacheService = new Mock<ICacheService>();
         var ipStackHttpClient = new Mock<IIpStackHttpClient>();
@@ -63,7 +63,7 @@ public class LocationServiceTests
         var service = new LocationService(ipStackHttpClient.Object, options, cacheService.Object);
 
         // Act
-        var result = service.GetLocation(ip);
+        var result = service.GetLocation(ipLocation);
 
         // Assert
         Assert.NotNull(result);

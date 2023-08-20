@@ -6,3 +6,4 @@ global using Ip2Location.Business.Services.Interfaces;
 global using Microsoft.Extensions.Options;
 global using Moq;
 global using OneOf;
+global using Ip2Location.Domain.Models;
