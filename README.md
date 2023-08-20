@@ -43,6 +43,12 @@ dotnet restore
 dotnet build
 ```
 
+Navigato to webapi .csproj directory and run the project:
+```
+cd ip2locationapp
+dotnet run --launch-profile "Ip2Location"
+```
+
 #### Configuration
 Update the appsettings.json with the required configurations:
 
@@ -54,7 +60,7 @@ From the project directory, run:
 ```
 dotnet run
 ```
-The service will start, and you can access it at http://localhost:5000.
+The service will start, and you can access it at http://localhost:5000 or Swagger page http://localhost:5000/swagger/index.html
 
 ### Usage
 ##### Get Location for an IP
