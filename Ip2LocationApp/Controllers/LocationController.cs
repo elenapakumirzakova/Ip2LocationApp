@@ -19,6 +19,7 @@ public class LocationController : ControllerBase
     [HttpGet("")]
     [SwaggerOperation(Summary = "Get Location by Ip", Description = "The primary endpoint to look up single IPv4 or IPv6 addresses. To call this endpoint, simply attach any IPv4 or IPv6 address to the API's base URL.")]
     [SwaggerResponse(200, "Success")]
+    [SwaggerResponse(400, "Bad Request")]
     [SwaggerResponse(422, "Validation Error")]
     public async Task<IActionResult> Get(string ip)
     {
